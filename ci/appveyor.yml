@@ -6,6 +6,10 @@
 
 # Reference: https://www.appveyor.com/docs/appveyor-yml/
 
+# Majority of this is taken from 
+# - https://dotnetcore.gaprogman.com/2017/06/08/continuous-integration-and-appveyor/
+# - https://stefanscherer.github.io/setup-windows-docker-ci-appveyor/
+
 version: 1.0.{build}
 
 # Do not build on tags (GitHub and BitBucket)
@@ -19,6 +23,12 @@ image: Visual Studio 2017
 
 configuration: Release
 
+environment:
+  DOCKER_USER:
+    secure: DH/F3YmCTtoML7jh0N72CA==
+  DOCKER_PASS:
+    secure: rwHHmt2wdZkHdQTKNJm48EVaGnXWvq4Fqfpxwy85UWQ=
+
 init:  
   - cmd: git config --global core.autocrlf true
 
@@ -29,7 +39,10 @@ before_build:
   - cmd: dotnet restore --verbosity m
 
 build_script:
-  - cmd: dotnet build
+  - cmd: cd src/Basket.Api
+  - cmd: dotnet publish -c Release -o out Basket.Api.csproj
+  - cmd: docker build -t jameslappin/basketApi .
+  - cmd: cd ../..
 
 test_script:
   - cmd: dotnet build src/Basket.UnitTests/Basket.UnitTests.csproj
