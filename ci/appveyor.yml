@@ -19,5 +19,14 @@ image: Visual Studio 2017
 
 configuration: Release
 
-build:
-  verbosity: minimal
+init:  
+  - cmd: git config --global core.autocrlf true
+
+before_build:
+  # Display .NET Core version
+  - cmd: dotnet --version
+  # Display minimal restore text
+  - cmd: dotnet restore --verbosity m
+
+build_script:
+  - cmd: dotnet build
