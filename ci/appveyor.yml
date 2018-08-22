@@ -41,7 +41,7 @@ before_build:
 build_script:
   - cmd: cd src/Basket.Api
   - cmd: dotnet publish -c Release -o out Basket.Api.csproj
-  - cmd: docker build -t jameslappin/basketApi .
+  - cmd: docker build -t jameslappin/basketapi .
   - cmd: cd ../..
 
 test_script:
