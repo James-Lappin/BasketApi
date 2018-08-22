@@ -47,3 +47,7 @@ build_script:
 test_script:
   - cmd: dotnet build src/Basket.UnitTests/Basket.UnitTests.csproj
   - cmd: dotnet test src/Basket.UnitTests/Basket.UnitTests.csproj
+
+deploy_script:
+  - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - docker push james/basketapi
