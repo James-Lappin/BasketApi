@@ -25,6 +25,8 @@ namespace Basket.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("basket db"));
+            services.AddScoped<ApiContext>();
+            services.AddScoped<BasketRepository>();
 
             services.AddHealthChecks(checks =>
             {
@@ -66,8 +68,8 @@ namespace Basket.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket API V1");
             });
 
-            var context = app.ApplicationServices.GetService<ApiContext>();
-            AddTestData(context);
+            // var context = app.ApplicationServices.GetService<ApiContext>();
+            // AddTestData(context);
 
             app.UseHttpsRedirection();
             app.UseMvc();

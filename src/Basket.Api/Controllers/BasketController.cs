@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Basket.Api.Controllers
@@ -10,7 +11,14 @@ namespace Basket.Api.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        // GET api/values
+        public BasketRepository BasketRepository { get; }
+
+        public BasketController(BasketRepository basketRepository)
+        {
+            BasketRepository = basketRepository;
+        }
+
+        // GET api/basket
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<string>> Get(long id)
         {
