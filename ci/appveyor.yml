@@ -49,6 +49,6 @@ test_script:
   - cmd: dotnet test src/Basket.UnitTests/Basket.UnitTests.csproj
 
 deploy_script:
-  - cmd echo "the secure varible is $env:DOCKER_USER"
+  - cmd: echo "the secure varible is $env:DOCKER_USER"
   - docker login -u="$env:DOCKER_USER" -p='$env:DOCKER_PASS'
   - docker push james/basketapi
