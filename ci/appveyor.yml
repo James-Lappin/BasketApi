@@ -49,7 +49,8 @@ test_script:
   - cmd: dotnet test src/Basket.UnitTests/Basket.UnitTests.csproj
 
 deploy_script:
-  - ps: Write-Host $env:DOCKER_USER
+  - ps: Write-Host "$env:DOCKER_USER"
+  - ps: Write-Host '$env:DOCKER_USER'
   - ps: Write-Host jameslappin
   - ps: docker login -u="$env:DOCKER_USER" -p='$env:DOCKER_PASS'
   - ps: docker push james/basketapi
