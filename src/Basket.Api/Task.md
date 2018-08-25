@@ -1,6 +1,6 @@
 # Task
 
-## Part 1:
+## Part 1
 
 Your part of the prototype will be to develop a Web API that will be used by customers to manage a basket of items.
 
@@ -14,3 +14,7 @@ Web api with the following
 - remove items
 - change quantity of items
 - clear basket
+
+## Part 2
+Create a client library that makes use of the API endpoints created in Part 1.  The purpose of this code to provide authors of client applications a simple framework to use in their applications.
+
