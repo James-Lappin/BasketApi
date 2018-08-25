@@ -46,8 +46,11 @@ namespace Basket.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(long id)
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> Delete(long id)
         {
+            await _basketRepository.DeleteBasket(id);
+            return NoContent();
         }
     }
 }

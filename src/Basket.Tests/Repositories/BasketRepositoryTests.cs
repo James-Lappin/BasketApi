@@ -93,5 +93,19 @@ namespace Basket.UnitTests.Repositories
             var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x=>x.Id.Equals(basket.Id));
             Assert.That(dbBasket, Is.Null);
         }
+
+        [Test]
+        public async Task DeleteBasketWhereBasketDoesntExist()
+        {
+            // arrange
+            const long basketId = 1L;
+
+            // act
+            await _sut.DeleteBasket(basketId);
+
+            // assert
+            var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x=>x.Id.Equals(basketId));
+            Assert.That(dbBasket, Is.Null);
+        }
     }
 }

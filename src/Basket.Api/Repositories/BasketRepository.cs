@@ -39,10 +39,13 @@ namespace Basket.Api.Repositories
         public async Task DeleteBasket(long basketId)
         {
             var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
-
+            if (dbBasket == null){
+                // This I'm a little unsure about. I dont know whether I should be telling the caller that it never existed or not
+                // In theory it's the same outcome.
+                return;
+            }
             
             _context.Baskets.Remove(dbBasket);
-
             await _context.SaveChangesAsync();
         }
     }
