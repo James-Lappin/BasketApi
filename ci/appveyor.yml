@@ -27,7 +27,7 @@ environment:
   DOCKER_USER:
     secure: DH/F3YmCTtoML7jh0N72CA==
   DOCKER_PASS:
-    secure: rwHHmt2wdZkHdQTKNJm48EVaGnXWvq4Fqfpxwy85UWQ=
+    secure: Jgm/MYBo9+sIAc+HoJRk45+Fc2k36GCuLcS635Am9Sw=
 
 init:  
   - cmd: git config --global core.autocrlf true
@@ -49,11 +49,5 @@ test_script:
   - cmd: dotnet test src/Basket.UnitTests/Basket.UnitTests.csproj
 
 deploy_script:
-  - echo "$env:DOCKER_USER"
-  - echo '$env:DOCKER_USER'
-  - echo jameslappin 
-  - ps: Write-Host "$env:DOCKER_USER"
-  - ps: Write-Host '$env:DOCKER_USER'
-  - ps: Write-Host jameslappin
-  - ps: docker login -u="$env:DOCKER_USER" -p='$env:DOCKER_PASS'
-  - ps: docker push james/basketapi
+  - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - docker push james/basketapi
