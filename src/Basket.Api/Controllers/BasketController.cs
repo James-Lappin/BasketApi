@@ -34,18 +34,18 @@ namespace Basket.Api.Controllers
             return Ok(basket);
         }
 
-        [HttpGet(Name = "GetBasket")]
+        [HttpGet(Name = "GetBaskets")]
         [ProducesResponseType(200, Type = typeof(BasketOfItems[]))]
         [ProducesResponseType(404)]
         public async Task<ActionResult<BasketOfItems>> Get(int page = 0, int pageSize = 10)
         {
-            var basket = await _basketRepository.GetBaskets();
-            if (basket == null)
+            var baskets = await _basketRepository.GetBaskets(page, pageSize);
+            if (baskets == null || !baskets.Any())
             {
                 return NotFound();
             }
 
-            return Ok(basket);
+            return Ok(baskets);
         }
 
         // Create
@@ -57,7 +57,7 @@ namespace Basket.Api.Controllers
             var basket = new BasketOfItems(customerId);
             await _basketRepository.CreateBasketAsync(basket);
 
-            return CreatedAtRoute("GetProduct", new { id = basket.Id }, basket);
+            return CreatedAtRoute("GetBasket", new { id = basket.Id }, basket);
         }
 
         [HttpPost("/api/v1/[controller]/clearbasket/{id}")]
@@ -78,9 +78,21 @@ namespace Basket.Api.Controllers
         }
 
         // update
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] BasketOfItems basket)
+        [HttpPut]
+        [ProducesResponseType(200, Type = typeof(BasketOfItems))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<BasketOfItems>> Put([FromBody] long basketId, [FromBody] long productId, [FromBody] int quantity)
         {
+            var basket = await _basketRepository.GetBasketById(basketId);
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            basket.AddUpdateOrRemoveItem(productId, quantity);
+            await _basketRepository.UpdateBasket(basket);
+
+            return Ok(basket);
         }
 
 

@@ -96,21 +96,6 @@ namespace Basket.UnitTests.Repositories
         }
 
         [Test]
-        public async Task GetBaskets()
-        {
-            // arrange
-            var basket = new BasketOfItems(1);
-            basket.AddUpdateOrRemoveItem(1, 3);
-            await _sut.CreateBasketAsync(basket);
-
-            // act
-            var actual = await _sut.GetBaskets();
-
-            // assert
-            Assert.That(actual.Count(), Is.EqualTo(1));
-        }
-
-        [Test]
         public async Task GetBasketsWithPageSize()
         {
             // arrange

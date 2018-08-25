@@ -37,7 +37,7 @@ namespace Basket.Api.Repositories
             return await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
         }
 
-        public async Task<BasketOfItems[]> GetBaskets(int page = 0, int pageSize = 10)
+        public async Task<BasketOfItems[]> GetBaskets(int page, int pageSize)
         {
             return await _context.Baskets
                             .Skip(page * pageSize)
