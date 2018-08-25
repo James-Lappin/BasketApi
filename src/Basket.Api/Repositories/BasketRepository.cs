@@ -39,6 +39,8 @@ namespace Basket.Api.Repositories
         public async Task DeleteBasket(long basketId)
         {
             var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
+
+            
             _context.Baskets.Remove(dbBasket);
 
             await _context.SaveChangesAsync();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Basket.Api.Models;
 using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,35 +12,41 @@ namespace Basket.Api.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        public BasketRepository BasketRepository { get; }
+        public BasketRepository _basketRepository { get; }
 
         public BasketController(BasketRepository basketRepository)
         {
-            BasketRepository = basketRepository;
+            _basketRepository = basketRepository;
         }
 
-        // GET api/basket
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<string>> Get(long id)
+        [ProducesResponseType(200, Type = typeof(BasketOfItems))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<BasketOfItems>> Get(long id)
         {
-            return new string[] { "value1", "value2" };
+            var basket = await _basketRepository.GetBasket(id);
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(basket);
         }
 
-        // POST api/values
+        // Create
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // update
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(long id)
         {
         }
     }
