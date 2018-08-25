@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Basket.Api.Models;
 using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +42,17 @@ namespace Basket.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Basket API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Basket API",
+                    Version = "v1",
+                    Description = "Basket API for adding products to a basket"
+                });
+
+                 // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -67,24 +79,11 @@ namespace Basket.Api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket API V1");
+                
             });
-
-            // var context = app.ApplicationServices.GetService<ApiContext>();
-            // AddTestData(context);
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
-
-        private void AddTestData(ApiContext context)
-        {
-            // place holder incase I need to add any test data
-            var dummyBasket = new BasketOfItems(4);
-            dummyBasket.AddUpdateOrRemoveItem(6, 3);
-            dummyBasket.AddUpdateOrRemoveItem(92891, 5);
-            
-            context.Baskets.Add(dummyBasket);
-            context.SaveChanges();
         }
     }
 }

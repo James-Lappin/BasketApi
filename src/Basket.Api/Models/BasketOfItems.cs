@@ -3,11 +3,19 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Basket.Api.Utilities;
+using Newtonsoft.Json;
 
 namespace Basket.Api.Models
 {
+    /// <summary>
+    /// A basket. 
+    /// </summary>
     public class BasketOfItems
     {
+        /// <summary>
+        /// Constructor to create a basket for a given customer
+        /// </summary>
+        /// <param name="customerId">Id of the customer to create basket for.</param> 
         public BasketOfItems(long customerId)
         {
             // Could get the database to generate the id.
@@ -18,19 +26,38 @@ namespace Basket.Api.Models
             BasketItems = new List<BasketItem>();
         }
 
+        /// <summary>
+        /// Id of the BasketItem
+        /// </summary>
+        [JsonConverter(typeof(IdToStringConverter))]
         public long Id { get; private set; }
+
+        /// <summary>
+        /// Id of the customer whose basket this is for
+        /// </summary>
         public long CustomerId { get; private set; }
+
+        /// <summary>
+        /// List of all items in this basket
+        /// </summary>
         public List<BasketItem> BasketItems { get; private set; }
 
-        public void AddUpdateOrRemoveItem(long itemId, int quantity)
+        /// <summary>
+        /// If a product is not in the basket, this adds the item.
+        /// If a product is in the basket, this updates the product quantity.
+        /// Removes the product from the basket if the quantity specified is 0.
+        /// </summary>
+        /// <param name="productId">Id of the product to be changed.</param>
+        /// <param name="quantity">Quantity to be changed. If 0 this will remove the product from basket</param>
+        public void AddUpdateOrRemoveItem(long productId, int quantity)
         {
             if (quantity == 0)
             {
-                RemoveItem(itemId);
+                RemoveItem(productId);
                 return;
             }
 
-            var itemInBasket = BasketItems.FirstOrDefault(x => x.ProductId.Equals(itemId));
+            var itemInBasket = BasketItems.FirstOrDefault(x => x.ProductId.Equals(productId));
             if (itemInBasket != null)
             {
                 // update item in basket
@@ -38,7 +65,7 @@ namespace Basket.Api.Models
                 return;
             }
 
-            var basketItem = new BasketItem(itemId, quantity);
+            var basketItem = new BasketItem(productId, quantity);
             BasketItems.Add(basketItem);
         }
 
@@ -51,6 +78,9 @@ namespace Basket.Api.Models
             }
         }
 
+        /// <summary>
+        /// Removes all products from the basket
+        /// </summary>
         public void ClearBasket() => BasketItems = new List<BasketItem>();
     }
 }
