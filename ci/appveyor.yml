@@ -50,4 +50,4 @@ test_script:
 
 deploy_script:
   - docker login -u="%DOCKER_USER%" -p="%DOCKER_PASS%"
-  - docker push james/basketapi
+  - docker push jameslappin/basketapi
