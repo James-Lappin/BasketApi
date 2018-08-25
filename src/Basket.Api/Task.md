@@ -9,8 +9,8 @@ This API will allow our users to set up and manage an order of items. The API wi
 The functionality to complete the purchase of the items will be handled separately and will be written by a different team once this prototype is complete.  
 
 Web api with the following 
-    - Create basket
-    - add items
-    - remove items
-    - change quantity of items
-    - clear basket
+- Create basket
+- add items
+- remove items
+- change quantity of items
+- clear basket
