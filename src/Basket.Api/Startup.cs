@@ -1,4 +1,5 @@
 ﻿using System;
+using Basket.Api.Models;
 using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -78,7 +79,12 @@ namespace Basket.Api
         private void AddTestData(ApiContext context)
         {
             // place holder incase I need to add any test data
-
+            var dummyBasket = new BasketOfItems(4);
+            dummyBasket.AddUpdateOrRemoveItem(6, 3);
+            dummyBasket.AddUpdateOrRemoveItem(92891, 5);
+            
+            context.Baskets.Add(dummyBasket);
+            context.SaveChanges();
         }
     }
 }

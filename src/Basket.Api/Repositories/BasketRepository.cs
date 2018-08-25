@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Basket.Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +32,17 @@ namespace Basket.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<BasketOfItems> GetBasket(long basketId)
+        public async Task<BasketOfItems> GetBasketById(long basketId)
         {
             return await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
+        }
+
+        public async Task<BasketOfItems[]> GetBaskets(int page = 0, int pageSize = 10)
+        {
+            return await _context.Baskets
+                            .Skip(page * pageSize)
+                            .Take(pageSize)
+                            .ToArrayAsync();
         }
 
         public async Task DeleteBasket(long basketId)

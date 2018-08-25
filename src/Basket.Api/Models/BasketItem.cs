@@ -1,4 +1,5 @@
 using System;
+using Basket.Api.Utilities;
 
 namespace Basket.Api.Models
 {
@@ -20,6 +21,7 @@ namespace Basket.Api.Models
                 throw new ArgumentException(nameof(quantity));
             }
 
+            Id = IdUtilities.GenerateId();
             ProductId = productId;
             // should probably make quantity an uint
             Quantity = quantity;

@@ -37,6 +37,7 @@ namespace Basket.UnitTests.Services
             var sut = new BasketItem(productId, quantity);
 
             // assert
+            Assert.That(sut.Id, Is.GreaterThan(0));
             Assert.That(sut.ProductId, Is.EqualTo(productId));
             Assert.That(sut.Quantity, Is.EqualTo(quantity));
         }
@@ -49,7 +50,6 @@ namespace Basket.UnitTests.Services
 
             // act
             sut.UpdateQuantity(6);
-
 
             // assert
             Assert.That(sut.ProductId, Is.EqualTo(1));

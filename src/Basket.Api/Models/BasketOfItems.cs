@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Basket.Api.Utilities;
 
 namespace Basket.Api.Models
 {
@@ -11,7 +12,7 @@ namespace Basket.Api.Models
         {
             // Could get the database to generate the id.
             // However I think it is a bit more DDD to get the app to.
-            Id = new IdGen.IdGenerator(0).CreateId();
+            Id = IdUtilities.GenerateId();
             CustomerId = customerId;
             // Dont know if this should be a list, for now it will do.
             BasketItems = new List<BasketItem>();
