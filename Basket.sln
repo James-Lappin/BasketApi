@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4DB0DE74-0003-4336-82FF-39F2946DFBAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.Api", "src\Basket.Api\Basket.Api.csproj", "{2E7E82EE-4133-409B-8193-2BB52710906D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Api", "src\Basket.Api\Basket.Api.csproj", "{2E7E82EE-4133-409B-8193-2BB52710906D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.Tests", "src\Basket.Tests\Basket.Tests.csproj", "{39E836C8-43A0-4ADA-840D-4A08CAA952C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Tests", "src\Basket.Tests\Basket.Tests.csproj", "{39E836C8-43A0-4ADA-840D-4A08CAA952C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.Client", "Basket.Client\Basket.Client.csproj", "{5F8BA69B-0937-4D11-81D4-C19FD08CA044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2E7E82EE-4133-409B-8193-2BB52710906D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,9 +45,28 @@ Global
 		{39E836C8-43A0-4ADA-840D-4A08CAA952C9}.Release|x64.Build.0 = Release|Any CPU
 		{39E836C8-43A0-4ADA-840D-4A08CAA952C9}.Release|x86.ActiveCfg = Release|Any CPU
 		{39E836C8-43A0-4ADA-840D-4A08CAA952C9}.Release|x86.Build.0 = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|x64.Build.0 = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Debug|x86.Build.0 = Debug|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|x64.ActiveCfg = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|x64.Build.0 = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|x86.ActiveCfg = Release|Any CPU
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2E7E82EE-4133-409B-8193-2BB52710906D} = {4DB0DE74-0003-4336-82FF-39F2946DFBAD}
 		{39E836C8-43A0-4ADA-840D-4A08CAA952C9} = {4DB0DE74-0003-4336-82FF-39F2946DFBAD}
+		{5F8BA69B-0937-4D11-81D4-C19FD08CA044} = {4DB0DE74-0003-4336-82FF-39F2946DFBAD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AA6E318-7676-45DC-9A0A-01A74A701522}
 	EndGlobalSection
 EndGlobal

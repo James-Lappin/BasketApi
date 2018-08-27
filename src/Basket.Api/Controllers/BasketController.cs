@@ -1,9 +1,9 @@
-﻿using Basket.Api.Models.Basket;
-using Basket.Api.Models.Domain;
+﻿using Basket.Api.Models.Domain;
 using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using Basket.Api.Basket;
 
 namespace Basket.Api.Controllers
 {
@@ -74,6 +74,11 @@ namespace Basket.Api.Controllers
         [ProducesResponseType(201, Type = typeof(BasketOfItems))]
         public async Task<ActionResult<BasketOfItems>> Post([FromBody] CreateBasketModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var basket = new BasketOfItems(model.CustomerId);
             await BasketRepository.CreateBasketAsync(basket);
 
