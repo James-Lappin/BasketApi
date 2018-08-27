@@ -1,13 +1,12 @@
-using Basket.Api.Models;
-using Basket.Api.Models.Domain;
+using Basket.Domain.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Basket.Api.Repositories
+namespace Basket.Domain.Repositories
 {
     public class ApiContext : DbContext
     {
         public ApiContext(DbContextOptions<ApiContext> options)
-            : base(options)
+            : base((DbContextOptions) options)
         {
         }
 

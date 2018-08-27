@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Basket.Api.Models;
-using Basket.Api.Models.Domain;
+using Basket.Domain.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Basket.Api.Repositories
+namespace Basket.Domain.Repositories
 {
     public class BasketRepository
     {

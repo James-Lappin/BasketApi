@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Basket.Api;
-using Basket.Api.Basket;
-using Basket.Client;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
+﻿using Basket.Client;
+using Basket.Domain.Models.Basket;
+using Basket.Domain.Models.Domain;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Basket.Tests.Client
 {
     [TestFixture]
-    class ClientTests
+    public class ClientTests
     {
-        private BasketClient _sut;
+        private IBasketClient _sut;
 
         [SetUp]
         public void SetUp()
@@ -29,15 +25,115 @@ namespace Basket.Tests.Client
         public async Task CreateBasket()
         {
             // arrange
+            const long customerId = 6L;
             var basketToCreate = new CreateBasketModel()
             {
-                CustomerId = 6L
+                CustomerId = customerId
             };
 
             // act
-            await _sut.Create(basketToCreate);
+            var basket = await _sut.CreateBasket(basketToCreate);
 
             // assert
+            Assert.That(basket, Is.Not.Null);
+            Assert.That(basket.Id, Is.GreaterThan(0));
+            Assert.That(basket.CustomerId, Is.EqualTo(customerId));
+        }
+
+        [Test]
+        public async Task GetBasket()
+        {
+            // arrange
+            var basket = await CreateBasketWithItems();
+
+            // act
+            var actual = await _sut.GetBasket(basket.Id);
+
+            // assert
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual.Id, Is.GreaterThan(0));
+            Assert.That(actual.BasketItems, Is.Not.Empty);
+        }
+
+        [Test]
+        public async Task AddItemToBasket()
+        {
+            // arrange
+            var basket = await CreateBasketWithItems();
+
+            var productId = 10328L;
+            var quantity = 5;
+            var model = new UpdateBasketModel()
+            {
+                BasketId = basket.Id,
+                ProductId = productId,
+                Quantity = quantity
+            };
+
+            // act
+            var actual = await _sut.AddItemToBasket(model);
+
+            // assert
+            Assert.That(actual, Is.Not.Null);
+            var itemAdded = actual.BasketItems.FirstOrDefault(x => x.ProductId.Equals(productId));
+            Assert.That(itemAdded, Is.Not.Null);
+            Assert.That(itemAdded.Id, Is.GreaterThan(0));
+            Assert.That(itemAdded.Quantity, Is.EqualTo(quantity));
+        }
+
+
+        [Test]
+        public async Task RemoveItem()
+        {
+            // arrange
+            var basket = await CreateBasketWithItems();
+
+            // act
+            var actual = await _sut.RemoveItem(basket.Id, basket.BasketItems.First().ProductId);
+
+            // assert
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual.BasketItems, Is.Empty);
+        }
+
+        [Test]
+        public async Task ClearBasket()
+        {
+            // arrange
+            var basket = await CreateBasketWithItems();
+
+            // act
+            var actual = await _sut.ClearBasket(basket.Id);
+
+            // assert
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual.BasketItems, Is.Empty);
+        }
+
+        private async Task<BasketOfItems> CreateBasketWithItems()
+        {
+            const long customerId = 6L;
+            var basketToCreate = new CreateBasketModel()
+            {
+                CustomerId = customerId
+            };
+
+            // create the basket
+            var basket = await _sut.CreateBasket(basketToCreate);
+
+            var productId = 999L;
+            var quantity = 1;
+            var model = new UpdateBasketModel()
+            {
+                BasketId = basket.Id,
+                ProductId = productId,
+                Quantity = quantity
+            };
+
+            // update the basket with items
+            var updatedBasket = await _sut.AddItemToBasket(model);
+
+            return updatedBasket;
         }
     }
 }

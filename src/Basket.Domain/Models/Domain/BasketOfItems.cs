@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Basket.Api.Utilities;
+using Basket.Domain.Utilities;
 using Newtonsoft.Json;
 
-namespace Basket.Api.Models.Domain
+namespace Basket.Domain.Models.Domain
 {
     /// <summary>
     /// A basket. 
     /// </summary>
     public class BasketOfItems
     {
+        // used for serialization....
+        public BasketOfItems() { }
+
         /// <summary>
         /// Constructor to create a basket for a given customer
         /// </summary>
@@ -28,17 +31,17 @@ namespace Basket.Api.Models.Domain
         /// Id of the BasketItem
         /// </summary>
         [JsonConverter(typeof(IdToStringConverter))]
-        public long Id { get; private set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Id of the customer whose basket this is for
         /// </summary>
-        public long CustomerId { get; private set; }
+        public long CustomerId { get; set; }
 
         /// <summary>
         /// List of all items in this basket
         /// </summary>
-        public List<BasketItem> BasketItems { get; private set; }
+        public List<BasketItem> BasketItems { get; set; }
 
         /// <summary>
         /// If a product is not in the basket, this adds the item.

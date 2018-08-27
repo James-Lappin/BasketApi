@@ -1,7 +1,6 @@
-using System;
 using IdGen;
 
-namespace Basket.Api.Utilities
+namespace Basket.Domain.Utilities
 {
     public static class IdUtilities
     {

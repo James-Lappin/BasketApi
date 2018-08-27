@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Basket.Domain.Utilities;
+using Newtonsoft.Json;
 
-namespace Basket.Api.Basket
+namespace Basket.Domain.Models.Basket
 {
     public class CreateBasketModel
     {
@@ -10,6 +12,7 @@ namespace Basket.Api.Basket
         /// <example>1</example>
         [Required]
         [Range(1, long.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
+        [JsonConverter(typeof(IdToStringConverter))]
         public long CustomerId { get; set; }
     }
 }

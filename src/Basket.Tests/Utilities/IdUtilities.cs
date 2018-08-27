@@ -1,4 +1,4 @@
-using Basket.Api.Utilities;
+using Basket.Domain.Utilities;
 using NUnit.Framework;
 
 namespace Basket.Tests.Utilities

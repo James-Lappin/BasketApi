@@ -1,8 +1,8 @@
 using System;
-using Basket.Api.Utilities;
+using Basket.Domain.Utilities;
 using Newtonsoft.Json;
 
-namespace Basket.Api.Models.Domain
+namespace Basket.Domain.Models.Domain
 {
     /// <summary>
     /// A product item within a basket. 

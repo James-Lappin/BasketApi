@@ -1,5 +1,5 @@
 using System;
-using Basket.Api.Models.Domain;
+using Basket.Domain.Models.Domain;
 using NUnit.Framework;
 
 namespace Basket.Tests.Domain
