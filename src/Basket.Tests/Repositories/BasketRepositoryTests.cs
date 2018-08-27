@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Basket.Api.Models;
+using Basket.Api.Models.Domain;
 using Basket.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;

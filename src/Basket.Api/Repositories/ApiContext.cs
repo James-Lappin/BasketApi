@@ -1,4 +1,5 @@
 using Basket.Api.Models;
+using Basket.Api.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Basket.Api.Repositories

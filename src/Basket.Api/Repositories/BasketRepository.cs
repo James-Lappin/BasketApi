@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Basket.Api.Models;
+using Basket.Api.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Basket.Api.Repositories
@@ -34,7 +35,9 @@ namespace Basket.Api.Repositories
 
         public async Task<BasketOfItems> GetBasketById(long basketId)
         {
-            return await Context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
+            return await Context.Baskets
+                .Include(x=>x.BasketItems)
+                .FirstOrDefaultAsync(x => x.Id.Equals(basketId));
         }
 
         public async Task<BasketOfItems[]> GetBaskets(int page, int pageSize)

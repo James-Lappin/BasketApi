@@ -1,5 +1,6 @@
 using System.Linq;
 using Basket.Api.Models;
+using Basket.Api.Models.Domain;
 using NUnit.Framework;
 
 namespace Basket.Tests.Models

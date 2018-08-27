@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Basket.Api.Models;
+﻿using Basket.Api.Models.Basket;
+using Basket.Api.Models.Domain;
 using Basket.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Basket.Api.Controllers
 {
@@ -13,14 +12,15 @@ namespace Basket.Api.Controllers
     /// </summary>
     [Route("api/v1/[controller]")]
     [Produces("application/json")]
+    [Consumes("application/json")]
     [ApiController]
     public class BasketController : ControllerBase
     {
-        public BasketRepository _basketRepository { get; }
+        private BasketRepository BasketRepository { get; }
 
         public BasketController(BasketRepository basketRepository)
         {
-            _basketRepository = basketRepository;
+            BasketRepository = basketRepository;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Basket.Api.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<BasketOfItems>> Get(long id)
         {
-            var basket = await _basketRepository.GetBasketById(id);
+            var basket = await BasketRepository.GetBasketById(id);
             if (basket == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace Basket.Api.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<BasketOfItems>> Get(int page = 0, int pageSize = 10)
         {
-            var baskets = await _basketRepository.GetBaskets(page, pageSize);
+            var baskets = await BasketRepository.GetBaskets(page, pageSize);
             if (baskets == null || !baskets.Any())
             {
                 return NotFound();
@@ -68,16 +68,47 @@ namespace Basket.Api.Controllers
         /// <summary>
         /// Creates a basket for the customer id supplied.
         /// </summary>
-        /// <param name="customerId">Id of customer to create basket for</param>
+        /// <param name="model">Model containing all the info needed to create a basket</param>
         /// <response code="201">Basket has been created</response>
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(BasketOfItems))]
-        public async Task<ActionResult<BasketOfItems>> Post([FromBody] long customerId)
+        public async Task<ActionResult<BasketOfItems>> Post([FromBody] CreateBasketModel model)
         {
-            var basket = new BasketOfItems(customerId);
-            await _basketRepository.CreateBasketAsync(basket);
+            var basket = new BasketOfItems(model.CustomerId);
+            await BasketRepository.CreateBasketAsync(basket);
 
             return CreatedAtRoute("GetBasket", new { id = basket.Id }, basket);
+        }
+
+        /// <summary>
+        /// Updates basket.
+        /// </summary>
+        /// <remarks>
+        /// This can be used to add a new item to the basket, update an existing item or remove an item from the basket.
+        /// </remarks>
+        /// <response code="200">Successfully updated the basket</response>
+        /// <response code="404">Basket could not be found</response>
+        [HttpPut]
+        [ProducesResponseType(200, Type = typeof(BasketOfItems))]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<BasketOfItems>> Put([FromBody] UpdateBasketModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var basket = await BasketRepository.GetBasketById(model.BasketId);
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            basket.AddUpdateOrRemoveItem(model.ProductId, model.Quantity);
+            await BasketRepository.UpdateBasket(basket);
+
+            return Ok(basket);
         }
 
         /// <summary>
@@ -91,42 +122,14 @@ namespace Basket.Api.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<BasketOfItems>> ClearBasket(long id)
         {
-            var basket = await _basketRepository.GetBasketById(id);
+            var basket = await BasketRepository.GetBasketById(id);
             if (basket == null)
             {
                 return NotFound();
             }
 
             basket.ClearBasket();
-            await _basketRepository.UpdateBasket(basket);
-
-            return Ok(basket);
-        }
-
-        /// <summary>
-        /// Updates basket.
-        /// </summary>
-        /// <remarks>
-        /// This can be used to add a new item to the basket, update an existing item or remove an item from the basket.
-        /// </remarks>
-        /// <param name="basketId">Id of the basket to be updated.</param>
-        /// <param name="productId">Id of the product to be added, updated or removed.</param>
-        /// <param name="quantity">The quatity of product to be in the basket. A quantity of 0 will remove the item from the basket</param>
-        /// <response code="200">Successfully updated the basket</response>
-        /// <response code="404">Basket could not be found</response>
-        [HttpPut]
-        [ProducesResponseType(200, Type = typeof(BasketOfItems))]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult<BasketOfItems>> Put([FromForm] long basketId, [FromForm] long productId, [FromForm] int quantity)
-        {
-            var basket = await _basketRepository.GetBasketById(basketId);
-            if (basket == null)
-            {
-                return NotFound();
-            }
-
-            basket.AddUpdateOrRemoveItem(productId, quantity);
-            await _basketRepository.UpdateBasket(basket);
+            await BasketRepository.UpdateBasket(basket);
 
             return Ok(basket);
         }
@@ -140,7 +143,7 @@ namespace Basket.Api.Controllers
         [ProducesResponseType(204)]
         public async Task<IActionResult> Delete(long id)
         {
-            await _basketRepository.DeleteBasket(id);
+            await BasketRepository.DeleteBasket(id);
             return NoContent();
         }
     }
