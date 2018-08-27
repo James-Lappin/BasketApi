@@ -2,7 +2,7 @@ using System;
 using Basket.Api.Models;
 using NUnit.Framework;
 
-namespace Basket.UnitTests.Services
+namespace Basket.Tests.Models
 {
     public class BasketItemTests
     {

@@ -8,38 +8,38 @@ namespace Basket.Api.Repositories
 {
     public class BasketRepository
     {
-        private ApiContext _context { get; set; }
+        private ApiContext Context { get; set; }
         public BasketRepository(ApiContext apiContext)
         {
-            _context = apiContext;
+            Context = apiContext;
         }
 
         public async Task CreateBasketAsync(BasketOfItems basket)
         {
-            _context.Baskets.Add(basket);
-            await _context.SaveChangesAsync();
+            Context.Baskets.Add(basket);
+            await Context.SaveChangesAsync();
         }
 
         public async Task UpdateBasket(BasketOfItems basket)
         {
-            var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basket.Id));
-            if (basket == null)
+            var dbBasket = await Context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basket.Id));
+            if (dbBasket == null)
             {
                 throw new ArgumentException("Couldnt find basket");
             }
 
             dbBasket = basket;
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
 
         public async Task<BasketOfItems> GetBasketById(long basketId)
         {
-            return await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
+            return await Context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
         }
 
         public async Task<BasketOfItems[]> GetBaskets(int page, int pageSize)
         {
-            return await _context.Baskets
+            return await Context.Baskets
                             .Skip(page * pageSize)
                             .Take(pageSize)
                             .ToArrayAsync();
@@ -47,15 +47,15 @@ namespace Basket.Api.Repositories
 
         public async Task DeleteBasket(long basketId)
         {
-            var dbBasket = await _context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
+            var dbBasket = await Context.Baskets.FirstOrDefaultAsync(x => x.Id.Equals(basketId));
             if (dbBasket == null){
                 // This I'm a little unsure about. I dont know whether I should be telling the caller that it never existed or not
                 // In theory it's the same outcome.
                 return;
             }
             
-            _context.Baskets.Remove(dbBasket);
-            await _context.SaveChangesAsync();
+            Context.Baskets.Remove(dbBasket);
+            await Context.SaveChangesAsync();
         }
     }
 }

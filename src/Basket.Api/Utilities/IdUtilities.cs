@@ -5,10 +5,10 @@ namespace Basket.Api.Utilities
 {
     public static class IdUtilities
     {
-        private static IdGenerator _generator = new IdGenerator(0);
+        private static readonly IdGenerator Generator = new IdGenerator(0);
         public static long GenerateId()
         {
-            return _generator.CreateId();
+            return Generator.CreateId();
         }
     }
 }

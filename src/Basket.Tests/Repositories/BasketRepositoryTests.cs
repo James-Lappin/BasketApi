@@ -6,7 +6,7 @@ using Basket.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace Basket.UnitTests.Repositories
+namespace Basket.Tests.Repositories
 {
     public class BasketRepositoryTests : IDisposable
     {

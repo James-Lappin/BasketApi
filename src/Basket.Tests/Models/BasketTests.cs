@@ -1,19 +1,11 @@
-using System;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Basket.Api.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Basket.Api.Models;
+using NUnit.Framework;
 
-namespace Basket.UnitTests.Domain
+namespace Basket.Tests.Models
 {
     public class BasketUnitTests 
     {
-        [SetUp]
-        public void Setup()
-        {
-            
-        }
 
         [Test]
         public void CreateBasket()

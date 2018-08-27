@@ -1,7 +1,7 @@
-using NUnit.Framework;
 using Basket.Api.Utilities;
+using NUnit.Framework;
 
-namespace Basket.UnitTests.Utilities
+namespace Basket.Tests.Utilities
 {
     public class IdUtilitiesTests
     {
