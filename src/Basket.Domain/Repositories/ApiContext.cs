@@ -10,12 +10,6 @@ namespace Basket.Domain.Repositories
         {
         }
 
-        // Used for testing
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<BasketOfItems>().HasData(new BasketOfItems(4));
-        }
-
         public DbSet<BasketOfItems> Baskets { get; set; }
     }
 }

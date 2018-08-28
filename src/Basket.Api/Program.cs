@@ -20,6 +20,7 @@ namespace Basket.Api
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseHealthChecks("/healthcheck", TimeSpan.FromSeconds(3))
+                
                 .UseStartup<Startup>();
     }
 }
