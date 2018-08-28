@@ -45,8 +45,8 @@ build_script:
   - cmd: cd ../..
 
 test_script:
-  - cmd: dotnet build src/Basket.UnitTests/Basket.UnitTests.csproj
-  - cmd: dotnet test src/Basket.UnitTests/Basket.UnitTests.csproj
+  - cmd: dotnet build src/Basket.Tests/Basket.Tests.csproj
+  - cmd: dotnet test src/Basket.Tests/Basket.Tests.csproj
 
 deploy_script:
   - docker login -u="%DOCKER_USER%" -p="%DOCKER_PASS%"
