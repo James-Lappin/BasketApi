@@ -33,7 +33,7 @@ namespace Basket.Api
             services.AddHealthChecks(checks =>
             {
                 checks.AddCheck("healthcheck",
-                            () => { return HealthCheckResult.Healthy("I am healthy!"); },
+                            () => HealthCheckResult.Healthy("I am healthy!"),
                             new TimeSpan(0, 0, 5)); // 5 second cache
 
                 // If we had a real database, I would add in a healthcheck for the database here

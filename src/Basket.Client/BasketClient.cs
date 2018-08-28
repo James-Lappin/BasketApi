@@ -12,20 +12,9 @@ namespace Basket.Client
     {
         private readonly HttpClient _client;
 
-        private BasketClient(HttpClient client)
+        public BasketClient(HttpClient client)
         {
             _client = client;
-        }
-
-        public static BasketClient Create(string baseAddress)
-        {
-            // would have to auth here as well
-            var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(baseAddress)
-            };
-
-            return new BasketClient(httpClient);
         }
 
         public async Task<BasketOfItems> CreateBasket(CreateBasketModel model)

@@ -5,6 +5,9 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Basket.Api;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Basket.Tests.Client
 {
@@ -16,9 +19,11 @@ namespace Basket.Tests.Client
         [SetUp]
         public void SetUp()
         {
-            // Probably gonna have to get this from somewhere
-            var baseAddress = "http://localhost:55603";
-            _sut = BasketClient.Create(baseAddress);
+            var builder = new WebHostBuilder()
+                .UseStartup<Startup>();
+            var testServer = new TestServer(builder);
+            var httpClient = testServer.CreateClient();
+            _sut = new BasketClient(httpClient);
         }
 
         [Test]
