@@ -9,9 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Api", "src\Basket.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Tests", "src\Basket.Tests\Basket.Tests.csproj", "{39E836C8-43A0-4ADA-840D-4A08CAA952C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.Client", "src\Basket.Client\Basket.Client.csproj", "{5F8BA69B-0937-4D11-81D4-C19FD08CA044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Client", "src\Basket.Client\Basket.Client.csproj", "{5F8BA69B-0937-4D11-81D4-C19FD08CA044}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.Domain", "src\Basket.Domain\Basket.Domain.csproj", "{B95A20A3-B365-4F14-8AF1-02D244435057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Domain", "src\Basket.Domain\Basket.Domain.csproj", "{B95A20A3-B365-4F14-8AF1-02D244435057}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{45963000-DA34-487D-AF72-777B59BDE8CB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		ci\appveyor.yml = ci\appveyor.yml
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

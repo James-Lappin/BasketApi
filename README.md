@@ -7,7 +7,11 @@ There are four projects.
 1) Basket.Api is the web api project containing the basket controller, swagger spec and the Dockerfile used to deploy the app
 2) Basket.Domain contains all the domain logic required to complete the task. The database is just the InMemoryDatabase.
 3) Basket.Client is all the logic to complete task 2.
-4) Basket.Tests contains all the tests for the domain and the client. 
+4) Basket.Tests contains all the tests for the domain and the client.
+
+## Remarks 
+I have assumed that the basket will be tied to a cusomter. I have also assumed that the customer will be contained in another service.
+A basket contains items. Basket items are an instance of a product. The product is what is being sold, basket item is that product in the basket. Again, I have assumed that the products come from an external service.
 
 ## Building
 There are two ways to build basket api
@@ -31,4 +35,5 @@ I have setup appveyor to run on every commit. This makes sure the solution build
 
 ## Docker
 Once the tests have passed, a docker image is created and uploaded to dockerhub. This can be found [here](https://hub.docker.com/r/jameslappin/basketapi/).
+To run the app from docker run `docker run -it -p 55603:80 jameslappin/basketapi`
 To run the app from docker run `docker run -it -p 55603:80 jameslappin/basketapi`

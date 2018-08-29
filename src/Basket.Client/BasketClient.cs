@@ -25,7 +25,8 @@ namespace Basket.Client
             var response = await _client.PostAsync("api/v1/basket/", content);
             if (!response.IsSuccessStatusCode)
             {
-                // figure this out later
+                HandleError(response);
+                return null;
             }
 
             var value = await response.Content.ReadAsStringAsync();
@@ -37,7 +38,8 @@ namespace Basket.Client
             var response = await _client.GetAsync($"api/v1/basket/{basketId}");
             if (!response.IsSuccessStatusCode)
             {
-                // figure this out later
+                HandleError(response);
+                return null;
             }
 
             return JsonConvert.DeserializeObject<BasketOfItems>(await response.Content.ReadAsStringAsync());
@@ -48,10 +50,11 @@ namespace Basket.Client
             var payload = JsonConvert.SerializeObject(model);
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-            var response = await _client.PutAsync("api/v1/basket", content);
+            var response = await _client.PutAsync($"api/v1/basket/{model.BasketId}", content);
             if (!response.IsSuccessStatusCode)
             {
-                // figure this out later
+                HandleError(response);
+                return null;
             }
 
             return JsonConvert.DeserializeObject<BasketOfItems>(await response.Content.ReadAsStringAsync());
@@ -73,10 +76,16 @@ namespace Basket.Client
             var response = await _client.PostAsync($"api/v1/basket/clearbasket/{basketId}", null);
             if (!response.IsSuccessStatusCode)
             {
-                // figure this out later
+                HandleError(response);
+                return null;
             }
 
             return JsonConvert.DeserializeObject<BasketOfItems>(await response.Content.ReadAsStringAsync());
+        }
+
+        private void HandleError(HttpResponseMessage response)
+        {
+            // do logging and other stuff
         }
     }
 

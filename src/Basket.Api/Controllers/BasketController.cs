@@ -93,13 +93,20 @@ namespace Basket.Api.Controllers
         /// This can be used to add a new item to the basket, update an existing item or remove an item from the basket.
         /// </remarks>
         /// <response code="200">Successfully updated the basket</response>
+        /// <response code="400">Id in url doesnt match basket id in model</response>
+        /// <response code="401">Basket could not be found</response>
         /// <response code="404">Basket could not be found</response>
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(BasketOfItems))]
-        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<BasketOfItems>> Put([FromBody] UpdateBasketModel model)
+        public async Task<ActionResult<BasketOfItems>> Put(long id, [FromBody] UpdateBasketModel model)
         {
+            if (!id.Equals(model.BasketId))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
