@@ -19,7 +19,7 @@ skip_tags: true
 skip_branch_with_pr: true
 
 # Build worker image (VM template)
-image: Windows Server 2019
+image: Ubuntu1804
 
 configuration: Release
 
