@@ -30,23 +30,23 @@ environment:
     secure: Jgm/MYBo9+sIAc+HoJRk45+Fc2k36GCuLcS635Am9Sw=
 
 init:  
-  - cmd: git config --global core.autocrlf true
+  - git config --global core.autocrlf true
 
 before_build:
   # Display .NET Core version
-  - cmd: dotnet --version
+  - dotnet --version
   # Display minimal restore text
-  - cmd: dotnet restore --verbosity m
+  - dotnet restore --verbosity m
 
 build_script:
-  - cmd: cd src/Basket.Api
-  - cmd: dotnet publish -c Release -o out Basket.Api.csproj
-  - cmd: docker build -t jameslappin/basketapi .
-  - cmd: cd ../..
+  - cd src/Basket.Api
+  - dotnet publish -c Release -o out Basket.Api.csproj
+  - docker build -t jameslappin/basketapi .
+  - cd ../..
 
 test_script:
-  - cmd: dotnet build src/Basket.Tests/Basket.Tests.csproj
-  - cmd: dotnet test src/Basket.Tests/Basket.Tests.csproj
+  - dotnet build src/Basket.Tests/Basket.Tests.csproj
+  - dotnet test src/Basket.Tests/Basket.Tests.csproj
 
 deploy_script:
   - docker login -u="%DOCKER_USER%" -p="%DOCKER_PASS%"
