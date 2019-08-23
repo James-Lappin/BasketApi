@@ -6,7 +6,7 @@
 
 # Reference: https://www.appveyor.com/docs/appveyor-yml/
 
-# Majority of this is taken from 
+# Majority of this is taken from
 # - https://dotnetcore.gaprogman.com/2017/06/08/continuous-integration-and-appveyor/
 # - https://stefanscherer.github.io/setup-windows-docker-ci-appveyor/
 
@@ -29,7 +29,7 @@ environment:
   DOCKER_PASS:
     secure: Jgm/MYBo9+sIAc+HoJRk45+Fc2k36GCuLcS635Am9Sw=
 
-init:  
+init:
   - git config --global core.autocrlf true
 
 before_build:
@@ -49,5 +49,5 @@ test_script:
   - dotnet test src/Basket.Tests/Basket.Tests.csproj
 
 deploy_script:
-  - docker login -u="%DOCKER_USER%" -p="%DOCKER_PASS%"
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker push jameslappin/basketapi
