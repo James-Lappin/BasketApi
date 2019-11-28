@@ -1,0 +1,20 @@
+name: Deploy
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: |
+        cd src/Basket.Api
+        dotnet publish -c Release -o out Basket.Api.csproj
+        docker build -t jameslappin/basketapi .
