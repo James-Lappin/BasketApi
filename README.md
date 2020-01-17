@@ -25,7 +25,7 @@ From the console run `dotnet run .\src\Basket.Api\Basket.Api.csproj`
 Both should start the web app on the url http://localhost:55603 (however this could change). To check that it is running correctly navigate to the healthcheck url http://localhost:55603/healthcheck
 
 ## Running the tests
-Within visual studio, right-click the test project and select run unit tests
+Within visual studio, right-click the test project and select run unit tests or `dotnet test`
 In the console run `dotnet test .\src\Basket.Tests\Basket.Tests.csproj`
 
 ## Swagger
