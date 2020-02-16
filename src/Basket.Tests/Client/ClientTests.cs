@@ -66,26 +66,29 @@ namespace Basket.Tests.Client
             // arrange
             var basket = await CreateBasketWithItems();
 
-            var productId = 10328L;
-            var quantity = 5;
-            var model = new UpdateBasketModel()
-            {
-                BasketId = basket.Id,
-                ProductId = productId,
-                Quantity = quantity
-            };
-
             // act
-            var actual = await _sut.AddItemToBasket(model);
+            var actual = await AddItemToBasket(basket,10328, 5);
 
             // assert
             Assert.That(actual, Is.Not.Null);
-            var itemAdded = actual.BasketItems.FirstOrDefault(x => x.ProductId.Equals(productId));
-            Assert.That(itemAdded, Is.Not.Null);
-            Assert.That(itemAdded.Id, Is.GreaterThan(0));
-            Assert.That(itemAdded.Quantity, Is.EqualTo(quantity));
+            AssertItemAdded(actual, 10328, 5);
         }
 
+        [Test]
+        public async Task AddMultipleItemsToBasket()
+        {
+            // arrange
+            var basket = await CreateBasketWithItems();
+
+            await AddItemToBasket(basket,10328, 5);
+            
+            // act
+            var actual = await AddItemToBasket(basket,81l, 2);
+
+            // assert
+            AssertItemAdded(actual, 81, 2);
+            AssertItemAdded(actual, 10328, 5);
+        }
 
         [Test]
         public async Task RemoveItem()
@@ -140,5 +143,24 @@ namespace Basket.Tests.Client
 
             return updatedBasket;
         }
+        
+        private async Task<BasketOfItems> AddItemToBasket(BasketOfItems basket, long productId = 10328L, int quantity = 5)
+        {
+            return await _sut.AddItemToBasket(new UpdateBasketModel()
+            {
+                BasketId = basket.Id,
+                ProductId = productId,
+                Quantity = quantity
+            });
+        }
+        
+        private static void AssertItemAdded(BasketOfItems basket, long productId, int quantity)
+        {
+            var item = basket.BasketItems.FirstOrDefault(x => x.ProductId.Equals(productId));
+            Assert.That(item, Is.Not.Null);
+            Assert.That(item.Id, Is.GreaterThan(0));
+            Assert.That(item.Quantity, Is.EqualTo(quantity));
+        }
+
     }
 }
