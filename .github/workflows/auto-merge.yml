@@ -9,6 +9,9 @@ on:
   pull_request_review:
     types:
       - submitted
+env:
+  MERGE_LABELS: "auto-merge,!wip"
+  MERGE_RETRY_SLEEP: 600000
 jobs:
   automerge:
     runs-on: ubuntu-latest
@@ -18,8 +21,7 @@ jobs:
         if: github.base_ref == 'develop'
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_METHOD: "squash"  
-          MERGE_LABELS: "automerge,!wip"
+          MERGE_METHOD: "squash"
           MERGE_COMMIT_MESSAGE: pull-request-title
           MERGE_DELETE_BRANCH: "true"
 
@@ -29,6 +31,4 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_METHOD: "merge"
-          MERGE_LABELS: "automerge,!wip"
           MERGE_COMMIT_MESSAGE: pull-request-title
-          
