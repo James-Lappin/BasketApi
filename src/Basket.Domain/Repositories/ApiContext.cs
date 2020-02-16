@@ -8,6 +8,7 @@ namespace Basket.Domain.Repositories
         public ApiContext(DbContextOptions<ApiContext> options)
             : base((DbContextOptions) options)
         {
+            
         }
 
         public DbSet<BasketOfItems> Baskets { get; set; }

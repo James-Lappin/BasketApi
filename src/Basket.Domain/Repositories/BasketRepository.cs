@@ -28,7 +28,8 @@ namespace Basket.Domain.Repositories
                 throw new ArgumentException("Couldnt find basket");
             }
 
-            dbBasket = basket;
+            //dbBasket = basket;
+            Context.Baskets.Update(dbBasket);
             await Context.SaveChangesAsync();
         }
 

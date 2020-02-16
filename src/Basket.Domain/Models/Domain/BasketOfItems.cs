@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Basket.Domain.Utilities;
 using Newtonsoft.Json;
@@ -30,6 +31,7 @@ namespace Basket.Domain.Models.Domain
         /// <summary>
         /// Id of the BasketItem
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [JsonConverter(typeof(IdToStringConverter))]
         public long Id { get; set; }
 
