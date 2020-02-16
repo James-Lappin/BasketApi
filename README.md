@@ -1,5 +1,4 @@
 # Basket Api
-
 [![Build status](https://ci.appveyor.com/api/projects/status/ulm6oty4g46o3crh/branch/master?svg=true)](https://ci.appveyor.com/project/JamesLappin/basketapi/branch/master)
 <a href="https://github.com/actions/create-release"><img alt="GitHub Actions status" src="https://github.com/actions/create-release/workflows/Tests/badge.svg"></a>
 
@@ -32,7 +31,7 @@ In the console run `dotnet test .\src\Basket.Tests\Basket.Tests.csproj`
 I find swagger a good way to document and test the api. I have setup swagger and the swagger UI can be found at http://localhost:55603/swagger
 
 ## CI/CD
-I have setup appveyor to run on every commit. This makes sure the solution builds, the tests pass and produces the app in a container. The code for appveyor is in the ci folder. The current status can be found at https://ci.appveyor.com/project/JamesLappin/basketapi 
+I have setup appveyor to run on every commit. This makes sure the solution builds, the tests pass and produces the app in a container. The code for appveyor is in the ci folder. The current status can be found [here](https://ci.appveyor.com/project/JamesLappin/basketapi)
 
 ## Docker
 Once the tests have passed, a docker image is created and uploaded to dockerhub. This can be found [here](https://hub.docker.com/r/jameslappin/basketapi/).
