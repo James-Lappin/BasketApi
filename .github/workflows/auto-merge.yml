@@ -11,7 +11,7 @@ on:
       - submitted
 env:
   MERGE_LABELS: "auto-merge,!wip"
-  MERGE_RETRY_SLEEP: 600000
+  MERGE_RETRY_SLEEP: 60000
 jobs:
   automerge:
     runs-on: ubuntu-latest
