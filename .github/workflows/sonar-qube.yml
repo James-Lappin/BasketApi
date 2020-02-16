@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+    sonar-qube:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v1
+      - name: Sonarscanner for dotnet
+        uses: Secbyte/dotnet-sonarscanner@v1.2
+        with:
+          buildCommand: dotnet build .
+          testCommand: dotnet test src/Basket.Tests/Basket.Tests.csproj
+          projectKey: BasketApi
+          projectName: BasketApi
+          sonarHostname: ${{ secrets.SONAR_HOST }}
+          beginArguments: /d:sonar.verbose="true"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
