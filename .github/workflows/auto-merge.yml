@@ -6,6 +6,7 @@ on:
       - unlabeled
       - edited
       - ready_for_review
+      - synchronize
   pull_request_review:
     types:
       - submitted
