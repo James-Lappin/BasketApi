@@ -1,9 +1,11 @@
 name: automerge
 on:
   pull_request:
-    branches: 
-      - master
-      - develop
+    types:
+      - labelled
+  pull_request_review:
+    types:
+      - submitted
 jobs:
   automerge:
     runs-on: ubuntu-latest
