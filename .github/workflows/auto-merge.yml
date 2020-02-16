@@ -2,23 +2,30 @@ name: automerge
 on:
   pull_request:
     types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
+      - labelled
   pull_request_review:
     types:
       - submitted
-  status: {}
 jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
-      - name: automerge
+      - name: automerge-develop
         uses: "pascalgn/automerge-action@a4b03eff945989d41c623c2784d6602560b91e5b"
+        if: github.base_ref == 'develop'
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_METHOD: "squash"  
+          MERGE_LABELS: "automerge,!wip"
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_DELETE_BRANCH: "true"
+
+      - name: automerge-master
+        uses: "pascalgn/automerge-action@a4b03eff945989d41c623c2784d6602560b91e5b"
+        if: github.base_ref == 'master'
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_METHOD: "merge"
+          MERGE_LABELS: "automerge,!wip"
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          
