@@ -2,7 +2,10 @@ name: automerge
 on:
   pull_request:
     types:
-      - labelled
+      - labeled
+      - unlabeled
+      - edited
+      - ready_for_review
   pull_request_review:
     types:
       - submitted
