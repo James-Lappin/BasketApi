@@ -1,16 +1,15 @@
 ﻿using Basket.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.HealthChecks;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Basket.Api
 {
@@ -30,18 +29,17 @@ namespace Basket.Api
             services.AddScoped<ApiContext>();
             services.AddScoped<BasketRepository>();
 
-            services.AddHealthChecks(checks =>
-            {
-                checks.AddCheck("healthcheck",
-                            () => HealthCheckResult.Healthy("I am healthy!"),
-                            new TimeSpan(0, 0, 5)); // 5 second cache
+            services.AddControllers()
+                .AddNewtonsoftJson();
 
-                // If we had a real database, I would add in a healthcheck for the database here
-            });
+            services.AddHealthChecks()
+                .AddCheck("healthcheck", () => new HealthCheckResult(HealthStatus.Healthy));
+            // If we had a real database, I would add in a healthcheck for the database here
+            
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Basket API",
                     Version = "v1",
@@ -56,15 +54,11 @@ namespace Basket.Api
                     c.IncludeXmlComments(xmlPath);
                 }
             });
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,6 +67,13 @@ namespace Basket.Api
             {
                 app.UseHsts();
             }
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapHealthChecks("/health");
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -85,7 +86,6 @@ namespace Basket.Api
             });
 
             app.UseHttpsRedirection();
-            app.UseMvc();
         }
     }
 }
