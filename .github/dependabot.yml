@@ -1,0 +1,51 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Swashbuckle.AspNetCore
+    versions:
+    - 5.6.3
+    - 6.0.2
+    - 6.0.4
+    - 6.0.5
+    - 6.0.7
+    - 6.1.0
+    - 6.1.1
+    - 6.1.2
+  - dependency-name: Microsoft.AspNetCore.Mvc.NewtonsoftJson
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Mvc.Testing
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.TestHost
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.EntityFrameworkCore.InMemory
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.8.3
+    - 16.9.1
+  - dependency-name: nunit
+    versions:
+    - 3.13.0
+    - 3.13.1
+- package-ecosystem: docker
+  directory: "/src/Basket.Api"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
